@@ -15,9 +15,9 @@ namespace SimulationModel.Model.NextElementSelector
 
         public override Element<T> GetNextElement(DefaultQueueItem item)
         {
-            if(item is Job Job)
+            if(item is ItemWithType itemWithType)
             {
-                return _nextElements.FirstOrDefault(c => (int)(c.Item2) == Job.Type).Item1;
+                return _nextElements.FirstOrDefault(c => (int)(c.Item2) == itemWithType.Type).Item1;
             }  
 
             return null;

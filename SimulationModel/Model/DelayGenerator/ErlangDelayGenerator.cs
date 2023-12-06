@@ -26,7 +26,7 @@ namespace SimulationModel.Model.DelayGenerator
                 erlangRandom += -Math.Log(1 - u) * _averageDelay;
             }
 
-            return _averageDelay;
+            return erlangRandom;
         }
     }
 }

@@ -20,7 +20,7 @@ namespace SimulationModel.Model.Elements
 
         public override void StartService(T item) 
         {
-            if(item is Job Job)
+            if(item is ItemWithType Job)
             {
                 Job.Finish(_currentTime);
             }
@@ -39,7 +39,7 @@ namespace SimulationModel.Model.Elements
 
             if(finalStats)
             {
-                if (typeof(T) == typeof(Job))
+                if (typeof(T) == typeof(ItemWithType))
                 {
                     Console.WriteLine("\t\tPatients Type   StartTime   FinishTime");
                     foreach (var item in _finishItems)

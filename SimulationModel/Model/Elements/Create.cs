@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using SimulationModel.Model.DelayGenerator;
-using SimulationModel.Model.Queue;
+using SimulationModel.Model.Queue.ItemFactory;
 using SimulationModel.Model.Queue.Item;
 
 namespace SimulationModel.Model.Elements
@@ -12,14 +13,14 @@ namespace SimulationModel.Model.Elements
 
         private List<T> _createdItems;
 
-        public Create(string name, IDelayGenerator delayGenerator)
+        public Create(string name, IDelayGenerator delayGenerator, ItemFactory<T> itemFactory = null)
            : base(name, delayGenerator)
         {
             Processing = true;
             _currentTime = 0;
             SetNextTime(_currentTime + _delayGenerators[0].GetDelay());
 
-            _itemFactory = new ItemFactory<T>();
+            _itemFactory = itemFactory ?? new ItemFactory<T>();
             _createdItems = new();
         }
 
