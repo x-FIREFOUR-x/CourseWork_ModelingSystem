@@ -38,7 +38,7 @@ namespace SimulationModel.Model.Elements
             _createdItems.Add(item);
 
             Element<T> nextElement = NextElementSelector.GetNextElement(item);
-            nextElement?.StartService(_itemFactory.CreateItem(_currentTime));
+            nextElement?.StartService(item);
         }
 
         public override void PrintStats(bool finalStats)
