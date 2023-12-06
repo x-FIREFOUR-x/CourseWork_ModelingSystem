@@ -44,6 +44,9 @@ namespace SimulationModel.Model.Elements
                 {
                     List<ItemWithType> finishItemsWithType = _finishItems.Cast<ItemWithType>().ToList();
 
+                    if (finishItemsWithType.Count == 0)
+                        return;
+
                     int countTypes = finishItemsWithType.Max(item => item.Type);
                     int[] countsTypeItems = new int[countTypes];
                     foreach (var item in finishItemsWithType)
@@ -62,6 +65,14 @@ namespace SimulationModel.Model.Elements
                     }
                     averageTime /= finishItemsWithType.Count();
                     Console.WriteLine($"\t\tAverage time complite work: {averageTime}");
+
+                    double averageTimeAwait = 0;
+                    foreach (var item in finishItemsWithType)
+                    {
+                        averageTimeAwait += item.TimeAwait;
+                    }
+                    averageTimeAwait /= finishItemsWithType.Count();
+                    Console.WriteLine($"\t\tAverage time await: {averageTimeAwait}");
 
                     /*
                     Console.WriteLine("\t\tType   StartTime   FinishTime");

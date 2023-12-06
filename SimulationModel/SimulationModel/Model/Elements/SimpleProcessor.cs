@@ -61,6 +61,7 @@ namespace SimulationModel.Model.Elements
         public override void StartService(T item)
         {
             ProcessingItem = item;
+            item.EndAwait(_currentTime);
 
             Console.WriteLine($".{Name}: start service, time: {_currentTime}");
             Processing = true;

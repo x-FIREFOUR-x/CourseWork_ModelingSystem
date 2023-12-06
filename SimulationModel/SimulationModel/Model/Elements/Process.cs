@@ -66,6 +66,8 @@ namespace SimulationModel.Model.Elements
         {
             _timesIncome.Add(_currentTime);
 
+            item.StartAwait(_currentTime);
+
             Console.Write(Name);
             if (TryStartService(item))
             {
