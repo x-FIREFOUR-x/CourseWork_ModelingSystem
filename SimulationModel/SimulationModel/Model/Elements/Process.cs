@@ -129,6 +129,14 @@ namespace SimulationModel.Model.Elements
         {
             base.PrintStats(finalStats);
 
+            int workingSubProcessors = 0;
+            foreach (var processor in _processors)
+            {
+                if (processor.Processing)
+                    workingSubProcessors += 1;
+            }
+            Console.WriteLine($"\t\tWorking: {workingSubProcessors}");
+
             Console.WriteLine($"\t\tQueue size: {_queue.Size}");
             Console.WriteLine($"\t\tFailures: {_countFailures}");
             Console.WriteLine($"\t\tProcessed items: {_countProcessed}");

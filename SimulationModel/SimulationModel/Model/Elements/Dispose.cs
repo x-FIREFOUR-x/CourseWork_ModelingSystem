@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using SimulationModel.Model.Queue.Item;
 
@@ -41,11 +42,34 @@ namespace SimulationModel.Model.Elements
             {
                 if (typeof(T) == typeof(ItemWithType))
                 {
-                    Console.WriteLine("\t\tPatients Type   StartTime   FinishTime");
+                    List<ItemWithType> finishItemsWithType = _finishItems.Cast<ItemWithType>().ToList();
+
+                    int countTypes = finishItemsWithType.Max(item => item.Type);
+                    int[] countsTypeItems = new int[countTypes];
+                    foreach (var item in finishItemsWithType)
+                    {
+                        countsTypeItems[item.Type - 1]++;
+                    }
+                    for (int i = 0; i < countsTypeItems.Length; i++)
+                    {
+                        Console.WriteLine($"\t\t\t{i + 1}: {countsTypeItems[i]}");
+                    }
+
+                    double averageTime = 0;
+                    foreach (var item in finishItemsWithType)
+                    {
+                        averageTime += item.FinishTime - item.StartTime;
+                    }
+                    averageTime /= finishItemsWithType.Count();
+                    Console.WriteLine($"\t\tAverage time complite work: {averageTime}");
+
+                    /*
+                    Console.WriteLine("\t\tType   StartTime   FinishTime");
                     foreach (var item in _finishItems)
                     {
                         item.PrintStats();
                     }
+                    */
                 }
             }
         }

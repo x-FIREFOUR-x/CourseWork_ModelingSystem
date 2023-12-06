@@ -4,15 +4,15 @@ namespace SimulationModel.Model.Queue.Item
 {
     public class ItemWithType : DefaultQueueItem
     {
-        public int Type { get; set; }
+        public int Type { get; private set; }
 
-        private double _startTime;
-        private double _finishTime;
+        public double StartTime { get; private set; }
+        public double FinishTime { get; private set; }
 
         public ItemWithType(double startTime, int type)
         {
-            _startTime = startTime;
-            _finishTime = double.NaN;
+            StartTime = startTime;
+            FinishTime = double.NaN;
 
             Type = type;
         }
@@ -24,12 +24,12 @@ namespace SimulationModel.Model.Queue.Item
 
         public void Finish(double time)
         {
-            _finishTime = time;
+            FinishTime = time;
         }
 
         public override void PrintStats()
         {
-            Console.WriteLine($"\t\t\t{Type}       {Math.Round(_startTime, 2)}      {Math.Round(_finishTime, 2)}");
+            Console.WriteLine($"\t\t\t{Type}       {Math.Round(StartTime, 2)}      {Math.Round(FinishTime, 2)}");
         }
     }
 }

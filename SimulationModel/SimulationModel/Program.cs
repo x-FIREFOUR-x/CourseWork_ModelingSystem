@@ -21,7 +21,7 @@ namespace SimulationModel
         {
             Create<ItemWithType> create = new Create<ItemWithType>(
                 "Create",
-                new ExponentialDelayGenerator(0.5),
+                new ExponentialDelayGenerator(0.25),
                 new ItemWithTypeFactory(new List<double>{0.3, 0.5, 0.2}));
 
             Process<ItemWithType> workPlace1 = new Process<ItemWithType>("AutomatedWorkPlace1", 1000, 
