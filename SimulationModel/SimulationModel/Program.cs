@@ -6,6 +6,7 @@ using SimulationModel.Model.Elements;
 using SimulationModel.Model.NextElementSelector;
 using SimulationModel.Model.Item;
 using SimulationModel.Model.Item.ItemFactory;
+using SimulationModel.Model.Queue;
 
 namespace SimulationModel
 { 
@@ -24,7 +25,7 @@ namespace SimulationModel
                 new ExponentialDelayGenerator(0.25),
                 new ItemWithTypeFactory(new List<double>{0.3, 0.5, 0.2}));
 
-            Process<ItemWithType> workPlace1 = new Process<ItemWithType>("AutomatedWorkPlace1", 1000, 
+            Process<ItemWithType> workPlace1 = new Process<ItemWithType>("AutomatedWorkPlace1", new InfinityProcessQueue<ItemWithType>(), 
                 new List<Element<ItemWithType>> {
                     new SimpleProcessor<ItemWithType>("machine1", new List<IDelayGenerator>{
                                                                     new ErlangDelayGenerator(0.6, 2),
@@ -43,7 +44,7 @@ namespace SimulationModel
                     ),
                 });
 
-            Process<ItemWithType> workPlace2 = new Process<ItemWithType>("AutomatedWorkPlace2", 1000,
+            Process<ItemWithType> workPlace2 = new Process<ItemWithType>("AutomatedWorkPlace2", new InfinityProcessQueue<ItemWithType>(),
                 new List<Element<ItemWithType>> {
                     new SimpleProcessor<ItemWithType>("machine1", new List<IDelayGenerator>{
                                                                     new ErlangDelayGenerator(0.85, 2),
@@ -57,7 +58,7 @@ namespace SimulationModel
                     )
                 });
 
-            Process<ItemWithType> workPlace3 = new Process<ItemWithType>("AutomatedWorkPlace3", 1000,
+            Process<ItemWithType> workPlace3 = new Process<ItemWithType>("AutomatedWorkPlace3", new InfinityProcessQueue<ItemWithType>(),
                 new List<Element<ItemWithType>> {
                     new SimpleProcessor<ItemWithType>("machine1", new List<IDelayGenerator>{
                                                                     new ErlangDelayGenerator(0.5, 2),
@@ -81,7 +82,7 @@ namespace SimulationModel
                     )
                 });
 
-            Process<ItemWithType> workPlace4 = new Process<ItemWithType>("AutomatedWorkPlace4", 1000,
+            Process<ItemWithType> workPlace4 = new Process<ItemWithType>("AutomatedWorkPlace4", new InfinityProcessQueue<ItemWithType>(),
                 new List<Element<ItemWithType>> {
                     new SimpleProcessor<ItemWithType>("machine1", new List<IDelayGenerator>{
                                                                     null,
@@ -100,7 +101,7 @@ namespace SimulationModel
                     )
                 });
 
-            Process<ItemWithType> workPlace5 = new Process<ItemWithType>("AutomatedWorkPlace5", 1000,
+            Process<ItemWithType> workPlace5 = new Process<ItemWithType>("AutomatedWorkPlace5", new InfinityProcessQueue<ItemWithType>(),
                 new List<Element<ItemWithType>> {
                     new SimpleProcessor<ItemWithType>("machine1", new List<IDelayGenerator>{
                                                                     new ErlangDelayGenerator(0.5, 2),

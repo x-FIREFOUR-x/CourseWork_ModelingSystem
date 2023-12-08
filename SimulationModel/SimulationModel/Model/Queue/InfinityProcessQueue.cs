@@ -4,22 +4,13 @@ using SimulationModel.Model.Item;
 
 namespace SimulationModel.Model.Queue
 {
-    public class ProcessQueue<T>: IProcessQueue<T>  where T: DefaultQueueItem
+    public class InfinityProcessQueue<T> : IProcessQueue<T> where T : DefaultQueueItem
     {
-        private readonly int _maxSize;
-
         private List<T> _items;
 
-        public ProcessQueue(int maxSize)
+        public InfinityProcessQueue()
         {
-            _maxSize = maxSize;
-
             _items = new List<T>();
-        }
-
-        public int GetMaxSize()
-        {
-            return _maxSize;
         }
 
         public int GetSize()
@@ -36,16 +27,13 @@ namespace SimulationModel.Model.Queue
 
         public bool PutItem(T item)
         {
-            if (GetSize() == _maxSize)
-                return false;
-
             _items.Add(item);
             return true;
         }
 
         public bool CanPutItem()
         {
-            return GetSize() < _maxSize;
+            return true;
         }
     }
 }

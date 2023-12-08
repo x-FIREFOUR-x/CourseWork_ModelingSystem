@@ -8,7 +8,7 @@ namespace SimulationModel.Model.Elements
 {
     class Process<T>: Element<T> where T : DefaultQueueItem
     {
-        private ProcessQueue<T> _queue;
+        private IProcessQueue<T> _queue;
 
         private int _countFailures;
 
@@ -19,8 +19,7 @@ namespace SimulationModel.Model.Elements
         private List<double> _timesIncome;
         public bool PrintTimesIncome { get; set; }
 
-        public int QueueSize { get => _queue.Size; }
-        public int QueueMaxSize { get => _queue.MaxSize; }
+        public int QueueSize { get => _queue.GetSize(); }
 
         public T GetItemWithQueue() { return _queue.GetItem(); }
         public void PutItemToQueue(T item) { _queue.PutItem(item); }
@@ -43,7 +42,7 @@ namespace SimulationModel.Model.Elements
             set => base.Processing = value;
         }
 
-        public Process(string name, int maxQueueSize, List<Element<T>> processors, int startQueueSize = 0)
+        public Process(string name, IProcessQueue<T> queue, List<Element<T>> processors)
             : base(name)
         {
             _processors = processors;
@@ -52,14 +51,7 @@ namespace SimulationModel.Model.Elements
             _timesIncome = new List<double>();
             PrintTimesIncome = false;
 
-            if (startQueueSize == 0)
-            {
-                _queue = new ProcessQueue<T>(maxQueueSize);
-            }
-            else
-            {
-                _queue = new ProcessQueue<T>(maxQueueSize, startQueueSize);
-            }
+            _queue = queue;
         }
 
         public override void StartService(T item)
@@ -74,7 +66,7 @@ namespace SimulationModel.Model.Elements
                 return;
             }
             
-            if (QueueSize < QueueMaxSize)
+            if (_queue.CanPutItem())
             {
                 Console.WriteLine($": add item in queue, time: {_currentTime}");
 
@@ -118,7 +110,7 @@ namespace SimulationModel.Model.Elements
 
         public override void UpdatedCurrentTime(double currentTime)
         {
-            _averageQueueDividend += (currentTime - _currentTime) * _queue.Size;
+            _averageQueueDividend += (currentTime - _currentTime) * _queue.GetSize();
             base.UpdatedCurrentTime(currentTime);
 
             foreach (var processor in _processors)
@@ -139,7 +131,7 @@ namespace SimulationModel.Model.Elements
             }
             Console.WriteLine($"\t\tWorking: {workingSubProcessors}");
 
-            Console.WriteLine($"\t\tQueue size: {_queue.Size}");
+            Console.WriteLine($"\t\tQueue size: {_queue.GetSize()}");
             Console.WriteLine($"\t\tFailures: {_countFailures}");
             Console.WriteLine($"\t\tProcessed items: {_countProcessed}");
 
