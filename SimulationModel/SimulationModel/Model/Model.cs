@@ -3,7 +3,7 @@ using System.Linq;
 using System;
 
 using SimulationModel.Model.Elements;
-using SimulationModel.Model.Queue.Item;
+using SimulationModel.Model.Item;
 
 namespace SimulationModel.Model
 {

@@ -1,6 +1,4 @@
-﻿using SimulationModel.Model.Queue.Item;
-
-namespace SimulationModel.Model.Queue.ItemFactory
+﻿namespace SimulationModel.Model.Item.ItemFactory
 {
     public class ItemFactory<T> where T: DefaultQueueItem
     {

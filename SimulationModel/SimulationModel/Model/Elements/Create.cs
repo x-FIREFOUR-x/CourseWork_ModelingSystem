@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 
 using SimulationModel.Model.DelayGenerator;
-using SimulationModel.Model.Queue.ItemFactory;
-using SimulationModel.Model.Queue.Item;
+using SimulationModel.Model.Item;
+using SimulationModel.Model.Item.ItemFactory;
 
 namespace SimulationModel.Model.Elements
 {

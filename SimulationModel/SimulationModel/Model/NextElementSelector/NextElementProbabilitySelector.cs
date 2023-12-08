@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using SimulationModel.Model.Elements;
-using SimulationModel.Model.Queue.Item;
+using SimulationModel.Model.Item;
 
 namespace SimulationModel.Model.NextElementSelector
 {

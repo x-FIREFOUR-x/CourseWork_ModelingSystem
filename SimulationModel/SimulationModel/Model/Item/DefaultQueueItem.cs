@@ -1,4 +1,4 @@
-﻿namespace SimulationModel.Model.Queue.Item
+﻿namespace SimulationModel.Model.Item
 {
     public class DefaultQueueItem
     {

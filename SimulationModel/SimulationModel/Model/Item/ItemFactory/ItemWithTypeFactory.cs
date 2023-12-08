@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using SimulationModel.Model.Queue.Item;
-
-namespace SimulationModel.Model.Queue.ItemFactory
+namespace SimulationModel.Model.Item.ItemFactory
 {
     public class ItemWithTypeFactory : ItemFactory<ItemWithType>
     {

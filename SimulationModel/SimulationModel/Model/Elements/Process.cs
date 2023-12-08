@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 using SimulationModel.Model.Queue;
-using SimulationModel.Model.Queue.Item;
+using SimulationModel.Model.Item;
 
 namespace SimulationModel.Model.Elements
 {

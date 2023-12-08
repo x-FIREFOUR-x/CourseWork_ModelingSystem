@@ -4,8 +4,8 @@ using SimulationModel.Model;
 using SimulationModel.Model.DelayGenerator;
 using SimulationModel.Model.Elements;
 using SimulationModel.Model.NextElementSelector;
-using SimulationModel.Model.Queue.Item;
-using SimulationModel.Model.Queue.ItemFactory;
+using SimulationModel.Model.Item;
+using SimulationModel.Model.Item.ItemFactory;
 
 namespace SimulationModel
 { 
