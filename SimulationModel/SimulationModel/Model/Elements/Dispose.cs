@@ -73,14 +73,6 @@ namespace SimulationModel.Model.Elements
                     }
                     averageTimeAwait /= finishItemsWithType.Count();
                     Console.WriteLine($"\t\tAverage time await: {averageTimeAwait}");
-
-                    /*
-                    Console.WriteLine("\t\tType   StartTime   FinishTime");
-                    foreach (var item in _finishItems)
-                    {
-                        item.PrintStats();
-                    }
-                    */
                 }
             }
         }

@@ -6,14 +6,9 @@ namespace SimulationModel.Model.Item
     {
         public int Type { get; private set; }
 
-        public double StartTime { get; private set; }
-        public double FinishTime { get; private set; }
-
-        public ItemWithType(double startTime, int type)
+        public ItemWithType(double startTime, int type):
+            base(startTime)
         {
-            StartTime = startTime;
-            FinishTime = double.NaN;
-
             Type = type;
         }
 

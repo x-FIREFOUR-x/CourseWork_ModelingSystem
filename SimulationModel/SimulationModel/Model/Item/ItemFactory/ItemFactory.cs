@@ -4,7 +4,7 @@
     {
         public virtual T CreateItem(double currentTime)
         {
-            return (T)new DefaultQueueItem();
+            return (T)new DefaultQueueItem(currentTime);
         }
     }
 }

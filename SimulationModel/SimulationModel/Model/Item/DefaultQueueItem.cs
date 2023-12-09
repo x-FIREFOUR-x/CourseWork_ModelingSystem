@@ -5,6 +5,14 @@
         private double _timeStartAwait;
         public double TimeAwait { get; private set; }
 
+        public double StartTime { get; protected set; }
+        public double FinishTime { get; protected set; }
+
+        public DefaultQueueItem(double startTime)
+        {
+            StartTime = startTime;
+            FinishTime = double.NaN;
+        }
 
         public virtual int GetIndexGenerator() 
         {
