@@ -23,7 +23,7 @@ namespace SimulationModel.Model
             _additionalAction = additionalAction;
         }
 
-        public void Simulation(double simulationTime, bool stepsStats = false)
+        public void Simulation(double simulationTime, bool finalStats = false, bool stepsStats = false)
         {
             while (_currentTime < simulationTime)
             {
@@ -60,12 +60,18 @@ namespace SimulationModel.Model
                 }
             }
 
-            Console.WriteLine("\n========================== Finish Stats ===============================");
-            foreach (var element in _elements)
+            if (finalStats)
             {
-                element.PrintStats(true);
+                Console.WriteLine("\n========================== Finish Stats ===============================");
+                foreach (var element in _elements)
+                {
+                    element.PrintStats(true);
+                }
+                Console.WriteLine("========================================================================");
             }
-            Console.WriteLine("========================================================================");
+            
         }
+
+        public List<Element<T>> GetElements() { return _elements; }
     }
 }
