@@ -44,5 +44,7 @@ namespace SimulationModel.Model.Elements
             Processing = false;
             ProcessingItem = null;
         }
+
+        public override Dictionary<String, double> GetStatistics() => throw new InvalidOperationException();
     }
 }

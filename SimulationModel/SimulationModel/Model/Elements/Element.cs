@@ -84,5 +84,7 @@ namespace SimulationModel.Model.Elements
         public virtual void PrintStats(bool finalStats) {
             Console.WriteLine($"\t*{Name}");
         }
+
+        public abstract Dictionary<String, double> GetStatistics();
     }
 }

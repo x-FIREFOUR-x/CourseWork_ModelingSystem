@@ -26,50 +26,59 @@ namespace SimulationModel.Model.Elements
             _finishItems.Add(item);
         }
 
-        public override void FinishService() => throw new NotSupportedException();
+        public override void FinishService() => throw new InvalidOperationException();
 
         public override void PrintStats(bool finalStats)
         {
             base.PrintStats(finalStats);
-            Console.WriteLine($"\t\tFinished items: {_countProcessed}");
 
-            if(finalStats)
+            Dictionary<String, double> stats = GetStatistics();
+
+            Console.WriteLine($"\t\t{StatName.FinishedItems}: {stats[StatName.FinishedItems]}");
+
+            if (typeof(T) == typeof(ItemWithType))
             {
-                if (typeof(T) == typeof(ItemWithType))
+                List<ItemWithType> finishItemsWithType = _finishItems.Cast<ItemWithType>().ToList();
+
+                int countTypes = finishItemsWithType.Max(item => item.Type);
+                int[] countsTypeItems = new int[countTypes];
+                foreach (var item in finishItemsWithType)
                 {
-                    List<ItemWithType> finishItemsWithType = _finishItems.Cast<ItemWithType>().ToList();
-
-                    if (finishItemsWithType.Count == 0)
-                        return;
-
-                    int countTypes = finishItemsWithType.Max(item => item.Type);
-                    int[] countsTypeItems = new int[countTypes];
-                    foreach (var item in finishItemsWithType)
-                    {
-                        countsTypeItems[item.Type - 1]++;
-                    }
-                    for (int i = 0; i < countsTypeItems.Length; i++)
-                    {
-                        Console.WriteLine($"\t\t\t{i + 1}: {countsTypeItems[i]}");
-                    }
-
-                    double averageTime = 0;
-                    foreach (var item in finishItemsWithType)
-                    {
-                        averageTime += item.FinishTime - item.StartTime;
-                    }
-                    averageTime /= finishItemsWithType.Count();
-                    Console.WriteLine($"\t\tAverage time complite work: {averageTime}");
-
-                    double averageTimeAwait = 0;
-                    foreach (var item in finishItemsWithType)
-                    {
-                        averageTimeAwait += item.TimeAwait;
-                    }
-                    averageTimeAwait /= finishItemsWithType.Count();
-                    Console.WriteLine($"\t\tAverage time await: {averageTimeAwait}");
+                    countsTypeItems[item.Type - 1]++;
+                }
+                for (int i = 0; i < countsTypeItems.Length; i++)
+                {
+                    Console.WriteLine($"\t\t\t{i + 1}: {countsTypeItems[i]}");
                 }
             }
+
+            Console.WriteLine($"\t\t{StatName.AverageTimeComplite}: {stats[StatName.AverageTimeComplite]}");
+            Console.WriteLine($"\t\t{StatName.AverageTimeAwait}: {stats[StatName.AverageTimeAwait]}");
+        }
+
+        public override Dictionary<String, double> GetStatistics()
+        {
+            Dictionary<String, double> stats = new Dictionary<String, double>();
+
+            stats[StatName.FinishedItems] = _countProcessed;
+
+            double averageTime = 0;
+            foreach (var item in _finishItems)
+            {
+                averageTime += item.FinishTime - item.StartTime;
+            }
+            averageTime /= _finishItems.Count();
+            stats[StatName.AverageTimeComplite] = averageTime;
+
+            double averageTimeAwait = 0;
+            foreach (var item in _finishItems)
+            {
+                averageTimeAwait += item.TimeAwait;
+            }
+            averageTimeAwait /= _finishItems.Count();
+            stats[StatName.AverageTimeAwait] = averageTimeAwait;
+
+            return stats;
         }
     }
 }

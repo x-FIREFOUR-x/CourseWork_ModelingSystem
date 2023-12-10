@@ -24,7 +24,7 @@ namespace SimulationModel.Model.Elements
             _createdItems = new();
         }
 
-        public override void StartService(T item) => throw new NotSupportedException();
+        public override void StartService(T item) => throw new InvalidOperationException();
 
         public override void FinishService()
         {
@@ -44,7 +44,18 @@ namespace SimulationModel.Model.Elements
         public override void PrintStats(bool finalStats)
         {
             base.PrintStats(finalStats);
-            Console.WriteLine($"\t\tCreated items: {_countProcessed}");
+
+            Dictionary<String, double> stats = GetStatistics();
+            Console.WriteLine($"\t\t{StatName.CreatedItems}: {stats[StatName.CreatedItems]}");
+        }
+
+        public override Dictionary<String, double> GetStatistics()
+        {
+            Dictionary<String, double> stats = new Dictionary<String, double>();
+
+            stats[StatName.CreatedItems] = _countProcessed;
+
+            return stats;
         }
     }
 }

@@ -153,24 +153,43 @@ namespace SimulationModel.Model.Elements
         {
             base.PrintStats(finalStats);
 
+            Dictionary<String, double> stats = GetStatistics();
+
+            Console.WriteLine($"\t\t{StatName.Working}: {stats[StatName.Working]}");
+
+            Console.WriteLine($"\t\t{StatName.QueueSize}: {stats[StatName.QueueSize]}");
+            Console.WriteLine($"\t\t{StatName.Failures}: {stats[StatName.Failures]}");
+            Console.WriteLine($"\t\t{StatName.Processed}: {stats[StatName.Processed]}");
+
+            if (finalStats)
+            {
+                Console.WriteLine($"\t\t{StatName.AverageQueueSize}: {stats[StatName.AverageQueueSize]}");
+                Console.WriteLine($"\t\t{StatName.FailureProbability}: {stats[StatName.FailureProbability]}");
+                Console.WriteLine($"\t\t{StatName.AverageWorkload}: {stats[StatName.AverageWorkload]}");
+            }
+        }
+
+        public override Dictionary<String, double> GetStatistics()
+        {
+            Dictionary<String, double> stats = new Dictionary<String, double>();
+
             int workingSubProcessors = 0;
             foreach (var processor in _processors)
             {
                 if (processor.Processing)
                     workingSubProcessors += 1;
             }
-            Console.WriteLine($"\t\tWorking: {workingSubProcessors}");
+            stats[StatName.Working] = workingSubProcessors;
 
-            Console.WriteLine($"\t\tQueue size: {_queue.GetSize()}");
-            Console.WriteLine($"\t\tFailures: {_countFailures}");
-            Console.WriteLine($"\t\tProcessed items: {_countProcessed}");
+            stats[StatName.QueueSize] = _queue.GetSize();
+            stats[StatName.Failures] = _countFailures;
+            stats[StatName.Processed] = _countProcessed;
 
-            if (finalStats)
-            {
-                Console.WriteLine($"\t\tAverage queue size: {_averageQueueDividend / _currentTime}");
-                Console.WriteLine($"\t\tFailure probability: {(float)_countFailures / (_countFailures + _countProcessed)}");
-                Console.WriteLine($"\t\tAverage workload: {_timeWorking / _currentTime}");
-            }
+            stats[StatName.AverageQueueSize] = _averageQueueDividend / _currentTime;
+            stats[StatName.FailureProbability] = (float)_countFailures / (_countFailures + _countProcessed);
+            stats[StatName.AverageWorkload] = _timeWorking / _currentTime;
+
+            return stats;
         }
     }
 }
