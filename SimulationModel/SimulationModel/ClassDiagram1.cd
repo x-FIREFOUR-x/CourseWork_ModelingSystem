@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SimulationModel.Model.Elements.Element&lt;T&gt;">
+    <Position X="14.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAIAAAAgAAAAgAAKDAQCAQAAAhAAAAAggAAAAAA=</HashCode>
+      <FileName>Model\Elements\Element.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="NextElementSelector" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="_delayGenerators" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="SimulationModel.Model.Elements.Create&lt;T&gt;">
+    <Position X="12" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABAAAAAAAAhAAAgAAACAAAAA=</HashCode>
+      <FileName>Model\Elements\Create.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_itemFactory" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="SimulationModel.Model.Elements.Dispose&lt;T&gt;">
+    <Position X="14.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAABAAAAAAAAhAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Elements\Dispose.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SimulationModel.Model.Elements.SimpleProcessor&lt;T&gt;">
+    <Position X="16.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAEAhAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Elements\SimpleProcessor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SimulationModel.Model.NextElementSelector.NextElementSelector&lt;T&gt;">
+    <Position X="10.25" Y="6.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAEAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\NextElementSelector\NextElementSelector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SimulationModel.Model.Item.DefaultQueueItem">
+    <Position X="6.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAABAAAIAIAAAAIAAAIAAACAQg=</HashCode>
+      <FileName>Model\Item\DefaultQueueItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SimulationModel.Model.Item.ItemWithType">
+    <Position X="6.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAQAIAAAAAAA=</HashCode>
+      <FileName>Model\Item\ItemWithType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SimulationModel.Model.Item.ItemFactory.ItemFactory&lt;T&gt;">
+    <Position X="9.25" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Item\ItemFactory\ItemFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SimulationModel.Model.Item.ItemFactory.ItemWithTypeFactory">
+    <Position X="9.25" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Item\ItemFactory\ItemWithTypeFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SimulationModel.Model.NextElementSelector.NextElementItemTypeSelector&lt;T&gt;">
+    <Position X="7" Y="5.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\NextElementSelector\NextElementItemTypeSelector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SimulationModel.Model.DelayGenerator.ExponentialDelayGenerator">
+    <Position X="11" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Model\DelayGenerator\ExponentialDelayGenerator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SimulationModel.Model.DelayGenerator.ErlangDelayGenerator">
+    <Position X="8.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAQAAAAAAAAE=</HashCode>
+      <FileName>Model\DelayGenerator\ErlangDelayGenerator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SimulationModel.Model.Queue.InfinityProcessQueue&lt;T&gt;">
+    <Position X="19.5" Y="3.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAECAAAAAAAAAABAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Queue\InfinityProcessQueue.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SimulationModel.Model.Model&lt;T&gt;">
+    <Position X="14.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAAAAAAAAAAQAAAAAABAAABAAAAAA=</HashCode>
+      <FileName>Model\Model.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="_elements" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="SimulationModel.Model.Elements.Process&lt;T&gt;">
+    <Position X="17" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAIAAAAAAAAQEAAIRAACIAAAAhAAQAAIAAAAAAA=</HashCode>
+      <FileName>Model\Elements\Process.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_queue" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="_processors" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Interface Name="SimulationModel.Model.DelayGenerator.IDelayGenerator">
+    <Position X="10" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\DelayGenerator\IDelayGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SimulationModel.Model.Queue.IProcessQueue&lt;T&gt;">
+    <Position X="19.25" Y="6" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAECAAAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Queue\IProcessQueue.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

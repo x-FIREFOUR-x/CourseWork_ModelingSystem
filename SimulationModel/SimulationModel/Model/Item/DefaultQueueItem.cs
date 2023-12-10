@@ -19,6 +19,11 @@
             return 0;
         }
 
+        public void Finish(double time)
+        {
+            FinishTime = time;
+        }
+
         public void StartAwait(double timeStartAwait)
         {
             _timeStartAwait = timeStartAwait;

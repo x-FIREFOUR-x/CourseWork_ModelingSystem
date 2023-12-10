@@ -21,17 +21,12 @@ namespace SimulationModel.Model.Elements
 
         public override void StartService(T item) 
         {
-            if(item is ItemWithType Job)
-            {
-                Job.Finish(_currentTime);
-            }
+            item.Finish(_currentTime);
             _countProcessed++;
             _finishItems.Add(item);
         }
 
-        public override void FinishService()
-        {
-        }
+        public override void FinishService() => throw new NotSupportedException();
 
         public override void PrintStats(bool finalStats)
         {

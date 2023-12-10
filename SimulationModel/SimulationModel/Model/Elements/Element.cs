@@ -10,15 +10,14 @@ namespace SimulationModel.Model.Elements
     {
         public string Name { get; private set; }
 
-        public virtual bool Processing { get; set; }
-
-        protected int _countProcessed;
-
         protected List<IDelayGenerator> _delayGenerators;
         private double _nextTime;
         protected double _currentTime;
 
+        protected int _countProcessed;
         protected double _timeWorking;
+
+        public virtual bool Processing { get; set; }
 
         public NextElementSelector.NextElementSelector<T> NextElementSelector { protected get; set; }
 
@@ -84,8 +83,6 @@ namespace SimulationModel.Model.Elements
 
         public virtual void PrintStats(bool finalStats) {
             Console.WriteLine($"\t*{Name}");
-
-            //Console.WriteLine($"\t\tAverage workload: {_timeWorking / _currentTime}");
         }
     }
 }

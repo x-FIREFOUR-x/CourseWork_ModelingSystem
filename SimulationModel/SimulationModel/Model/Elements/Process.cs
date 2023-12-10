@@ -9,20 +9,13 @@ namespace SimulationModel.Model.Elements
     class Process<T>: Element<T> where T : DefaultQueueItem
     {
         private IProcessQueue<T> _queue;
-
-        private int _countFailures;
-
-        private double _averageQueueDividend;
-
         private List<Element<T>> _processors;
 
-        private List<double> _timesIncome;
-        public bool PrintTimesIncome { get; set; }
+        private int _countFailures;
+        private double _averageQueueDividend;
+        
 
         public int QueueSize { get => _queue.GetSize(); }
-
-        public T GetItemWithQueue() { return _queue.GetItem(); }
-        public void PutItemToQueue(T item) { _queue.PutItem(item); }
 
         public override bool Processing
         {
@@ -41,6 +34,19 @@ namespace SimulationModel.Model.Elements
             }
             set => base.Processing = value;
         }
+        public override double NextTime()
+        {
+            double time = Double.PositiveInfinity;
+            foreach (var processor in _processors)
+            {
+                if (time > processor.NextTime())
+                {
+                    time = processor.NextTime();
+                }
+            }
+
+            return time;
+        }
 
         public Process(string name, IProcessQueue<T> queue, List<Element<T>> processors)
             : base(name)
@@ -48,16 +54,11 @@ namespace SimulationModel.Model.Elements
             _processors = processors;
             SetNextTime(Double.PositiveInfinity);
 
-            _timesIncome = new List<double>();
-            PrintTimesIncome = false;
-
             _queue = queue;
         }
 
         public override void StartService(T item)
         {
-            _timesIncome.Add(_currentTime);
-
             item.StartAwait(_currentTime);
 
             Console.Write(Name);
@@ -119,6 +120,35 @@ namespace SimulationModel.Model.Elements
             }
         }
 
+        public override bool TryFinish()
+        {
+            foreach (var processor in _processors)
+            {
+                if (Math.Abs(processor.NextTime() - processor.CurrentTime) < .0001f)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool TryStartService(T item)
+        {
+            foreach (var processor in _processors)
+            {
+                if (!processor.Processing)
+                {
+                    base.StartService(item);
+                    processor.StartService(item);
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public override void PrintStats(bool finalStats)
         {
             base.PrintStats(finalStats);
@@ -140,61 +170,7 @@ namespace SimulationModel.Model.Elements
                 Console.WriteLine($"\t\tAverage queue size: {_averageQueueDividend / _currentTime}");
                 Console.WriteLine($"\t\tFailure probability: {(float)_countFailures / (_countFailures + _countProcessed)}");
                 Console.WriteLine($"\t\tAverage workload: {_timeWorking / _currentTime}");
-
-                if(PrintTimesIncome)
-                {
-                    Console.Write("\t\tIntervals between incomes: ");
-                    for (int i = 1; i < _timesIncome.Count; i++)
-                    {
-                        Console.Write($"{Math.Round(_timesIncome[i] - _timesIncome[i-1], 2)} ");
-                    }
-                    Console.WriteLine();
-                }
-                
             }
-        }
-
-        private bool TryStartService(T item)
-        {
-            foreach(var processor in _processors)
-            {
-                if(!processor.Processing)
-                {
-                    base.StartService(item);
-                    processor.StartService(item);
-
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public override bool TryFinish()
-        {
-            foreach (var processor in _processors)
-            {
-                if (Math.Abs(processor.NextTime() - processor.CurrentTime) < .0001f)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public override double NextTime()
-        {
-            double time = Double.PositiveInfinity;
-            foreach (var processor in _processors)
-            {
-                if (time > processor.NextTime())
-                {
-                    time = processor.NextTime();
-                }
-            }
-
-            return time;
         }
     }
 }

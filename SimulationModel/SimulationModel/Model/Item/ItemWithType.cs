@@ -17,11 +17,6 @@ namespace SimulationModel.Model.Item
             return Type - 1;
         }
 
-        public void Finish(double time)
-        {
-            FinishTime = time;
-        }
-
         public override void PrintStats()
         {
             Console.WriteLine($"\t\t\t{Type}       {Math.Round(StartTime, 2)}      {Math.Round(FinishTime, 2)}");
