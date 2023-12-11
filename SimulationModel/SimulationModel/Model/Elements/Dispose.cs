@@ -10,8 +10,8 @@ namespace SimulationModel.Model.Elements
     {
         private List<T> _finishItems;
 
-        public Dispose(string name)
-            :base(name)
+        public Dispose(string name, bool isDebug = true)
+            :base(name, isDebug)
         {
             _currentTime = 0;
             SetNextTime(Double.PositiveInfinity);

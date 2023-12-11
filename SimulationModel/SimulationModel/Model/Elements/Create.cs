@@ -13,8 +13,8 @@ namespace SimulationModel.Model.Elements
 
         private List<T> _createdItems;
 
-        public Create(string name, IDelayGenerator delayGenerator, ItemFactory<T> itemFactory = null)
-           : base(name, delayGenerator)
+        public Create(string name, IDelayGenerator delayGenerator, ItemFactory<T> itemFactory = null, bool isDebug = true)
+           : base(name, delayGenerator, isDebug)
         {
             Processing = true;
             _currentTime = 0;
@@ -30,7 +30,8 @@ namespace SimulationModel.Model.Elements
         {
             base.FinishService();
 
-            Console.WriteLine($"{Name}: finish, time: {_currentTime}");
+            if (IsDebug)
+                Console.WriteLine($"{Name}: finish, time: {_currentTime}");
 
             SetNextTime(_currentTime + _delayGenerators[0].GetDelay());
 

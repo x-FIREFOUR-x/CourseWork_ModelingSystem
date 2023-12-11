@@ -17,6 +17,8 @@ namespace SimulationModel.Model.Elements
         protected int _countProcessed;
         protected double _timeWorking;
 
+        public bool IsDebug { get; protected set; }
+
         public virtual bool Processing { get; set; }
 
         public NextElementSelector.NextElementSelector<T> NextElementSelector { protected get; set; }
@@ -28,9 +30,10 @@ namespace SimulationModel.Model.Elements
         public virtual double CurrentTime => _currentTime; 
        
 
-        public Element(string name, IDelayGenerator delayGenerator)
+        public Element(string name, IDelayGenerator delayGenerator, bool isDebug)
         {
             Name = name;
+            IsDebug = isDebug;
 
             _currentTime = 0;
 
@@ -38,18 +41,21 @@ namespace SimulationModel.Model.Elements
             _delayGenerators.Add(delayGenerator);
         }
 
-        public Element(string name, List<IDelayGenerator> delayGenerators)
+        public Element(string name, List<IDelayGenerator> delayGenerators, bool isDebug)
         {
             Name = name;
+            IsDebug = isDebug;
 
             _currentTime = 0;
 
             _delayGenerators = delayGenerators;
         }
 
-        public Element(string name)
+        public Element(string name, bool isDebug)
         {
             Name = name;
+            IsDebug = isDebug;
+
             _currentTime = 0;
 
             _delayGenerators = null;

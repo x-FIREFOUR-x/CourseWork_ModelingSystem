@@ -33,7 +33,9 @@ namespace SimulationModel.Model
                 foreach (var element in _elements)
                     element.UpdatedCurrentTime(_currentTime);
 
-                Console.WriteLine();
+                if (IsDebug())
+                    Console.WriteLine();
+
                 foreach (var element in _elements)
                 {
                     if (element.TryFinish())
@@ -73,5 +75,15 @@ namespace SimulationModel.Model
         }
 
         public List<Element<T>> GetElements() { return _elements; }
+
+        private bool IsDebug()
+        {
+            foreach (var element in _elements)
+            {
+                if (element.IsDebug)
+                    return true;
+            }
+            return false;
+        }
     }
 }

@@ -147,42 +147,48 @@ namespace SimulationModel
             Create<ItemWithType> create = new Create<ItemWithType>(
                 "Create",
                 new ExponentialDelayGenerator(avgCreate),
-                new ItemWithTypeFactory(chanseCreate));
+                new ItemWithTypeFactory(chanseCreate),
+                false);
 
             Process<ItemWithType> workPlace1 = new Process<ItemWithType>("AutomatedWorkPlace1", new InfinityProcessQueue<ItemWithType>(),
                 new List<Element<ItemWithType>> {
-                    new SimpleProcessor<ItemWithType>("machine1", new List<IDelayGenerator>{ new ErlangDelayGenerator(avgDelayProcess1[0], 2), new ErlangDelayGenerator(avgDelayProcess1[1], 2), new ErlangDelayGenerator(avgDelayProcess1[2], 2)}),
-                    new SimpleProcessor<ItemWithType>("machine2", new List<IDelayGenerator>{ new ErlangDelayGenerator(avgDelayProcess1[0], 2), new ErlangDelayGenerator(avgDelayProcess1[1], 2), new ErlangDelayGenerator(avgDelayProcess1[2], 2)}),
-                    new SimpleProcessor<ItemWithType>("machine3", new List<IDelayGenerator>{ new ErlangDelayGenerator(avgDelayProcess1[0], 2), new ErlangDelayGenerator(avgDelayProcess1[1], 2), new ErlangDelayGenerator(avgDelayProcess1[2], 2)}),
-                });
+                    new SimpleProcessor<ItemWithType>("machine1", new List<IDelayGenerator>{ new ErlangDelayGenerator(avgDelayProcess1[0], 2), new ErlangDelayGenerator(avgDelayProcess1[1], 2), new ErlangDelayGenerator(avgDelayProcess1[2], 2)}, false),
+                    new SimpleProcessor<ItemWithType>("machine2", new List<IDelayGenerator>{ new ErlangDelayGenerator(avgDelayProcess1[0], 2), new ErlangDelayGenerator(avgDelayProcess1[1], 2), new ErlangDelayGenerator(avgDelayProcess1[2], 2)}, false),
+                    new SimpleProcessor<ItemWithType>("machine3", new List<IDelayGenerator>{ new ErlangDelayGenerator(avgDelayProcess1[0], 2), new ErlangDelayGenerator(avgDelayProcess1[1], 2), new ErlangDelayGenerator(avgDelayProcess1[2], 2)}, false),
+                },
+                false);
 
             Process<ItemWithType> workPlace2 = new Process<ItemWithType>("AutomatedWorkPlace2", new InfinityProcessQueue<ItemWithType>(),
                 new List<Element<ItemWithType>> {
-                    new SimpleProcessor<ItemWithType>("machine1", new List<IDelayGenerator>{ new ErlangDelayGenerator(avgDelayProcess2[0], 2), null, new ErlangDelayGenerator(avgDelayProcess2[2], 2)}),
-                    new SimpleProcessor<ItemWithType>("machine2", new List<IDelayGenerator>{ new ErlangDelayGenerator(avgDelayProcess2[0], 2), null, new ErlangDelayGenerator(avgDelayProcess2[2], 2)}),
-                });
+                    new SimpleProcessor<ItemWithType>("machine1", new List<IDelayGenerator>{ new ErlangDelayGenerator(avgDelayProcess2[0], 2), null, new ErlangDelayGenerator(avgDelayProcess2[2], 2)}, false),
+                    new SimpleProcessor<ItemWithType>("machine2", new List<IDelayGenerator>{ new ErlangDelayGenerator(avgDelayProcess2[0], 2), null, new ErlangDelayGenerator(avgDelayProcess2[2], 2)}, false),
+                },
+                false);
 
             Process<ItemWithType> workPlace3 = new Process<ItemWithType>("AutomatedWorkPlace3", new InfinityProcessQueue<ItemWithType>(),
                 new List<Element<ItemWithType>> {
-                    new SimpleProcessor<ItemWithType>("machine1", new List<IDelayGenerator>{ new ErlangDelayGenerator(avgDelayProcess3[0], 2), new ErlangDelayGenerator(avgDelayProcess3[1], 2), new ErlangDelayGenerator(avgDelayProcess3[2], 2)}),
-                    new SimpleProcessor<ItemWithType>("machine2", new List<IDelayGenerator>{ new ErlangDelayGenerator(avgDelayProcess3[0], 2), new ErlangDelayGenerator(avgDelayProcess3[1], 2), new ErlangDelayGenerator(avgDelayProcess3[2], 2)}),
-                    new SimpleProcessor<ItemWithType>("machine3", new List<IDelayGenerator>{ new ErlangDelayGenerator(avgDelayProcess3[0], 2), new ErlangDelayGenerator(avgDelayProcess3[1], 2), new ErlangDelayGenerator(avgDelayProcess3[2], 2)}),
-                    new SimpleProcessor<ItemWithType>("machine4", new List<IDelayGenerator>{ new ErlangDelayGenerator(avgDelayProcess3[0], 2), new ErlangDelayGenerator(avgDelayProcess3[1], 2), new ErlangDelayGenerator(avgDelayProcess3[2], 2)}),
-                });
+                    new SimpleProcessor<ItemWithType>("machine1", new List<IDelayGenerator>{ new ErlangDelayGenerator(avgDelayProcess3[0], 2), new ErlangDelayGenerator(avgDelayProcess3[1], 2), new ErlangDelayGenerator(avgDelayProcess3[2], 2)}, false),
+                    new SimpleProcessor<ItemWithType>("machine2", new List<IDelayGenerator>{ new ErlangDelayGenerator(avgDelayProcess3[0], 2), new ErlangDelayGenerator(avgDelayProcess3[1], 2), new ErlangDelayGenerator(avgDelayProcess3[2], 2)}, false),
+                    new SimpleProcessor<ItemWithType>("machine3", new List<IDelayGenerator>{ new ErlangDelayGenerator(avgDelayProcess3[0], 2), new ErlangDelayGenerator(avgDelayProcess3[1], 2), new ErlangDelayGenerator(avgDelayProcess3[2], 2)}, false),
+                    new SimpleProcessor<ItemWithType>("machine4", new List<IDelayGenerator>{ new ErlangDelayGenerator(avgDelayProcess3[0], 2), new ErlangDelayGenerator(avgDelayProcess3[1], 2), new ErlangDelayGenerator(avgDelayProcess3[2], 2)}, false),
+                },
+                false);
 
             Process<ItemWithType> workPlace4 = new Process<ItemWithType>("AutomatedWorkPlace4", new InfinityProcessQueue<ItemWithType>(),
                 new List<Element<ItemWithType>> {
-                    new SimpleProcessor<ItemWithType>("machine1", new List<IDelayGenerator>{ null, new ErlangDelayGenerator(avgDelayProcess4[1], 2), new ErlangDelayGenerator(avgDelayProcess4[2], 2)}),
-                    new SimpleProcessor<ItemWithType>("machine2", new List<IDelayGenerator>{ null, new ErlangDelayGenerator(avgDelayProcess4[1], 2), new ErlangDelayGenerator(avgDelayProcess4[2], 2)}),
-                    new SimpleProcessor<ItemWithType>("machine3", new List<IDelayGenerator>{ null, new ErlangDelayGenerator(avgDelayProcess4[1], 2), new ErlangDelayGenerator(avgDelayProcess4[2], 2)}),
-                });
+                    new SimpleProcessor<ItemWithType>("machine1", new List<IDelayGenerator>{ null, new ErlangDelayGenerator(avgDelayProcess4[1], 2), new ErlangDelayGenerator(avgDelayProcess4[2], 2)}, false),
+                    new SimpleProcessor<ItemWithType>("machine2", new List<IDelayGenerator>{ null, new ErlangDelayGenerator(avgDelayProcess4[1], 2), new ErlangDelayGenerator(avgDelayProcess4[2], 2)}, false),
+                    new SimpleProcessor<ItemWithType>("machine3", new List<IDelayGenerator>{ null, new ErlangDelayGenerator(avgDelayProcess4[1], 2), new ErlangDelayGenerator(avgDelayProcess4[2], 2)}, false),
+                },
+                false);
 
             Process<ItemWithType> workPlace5 = new Process<ItemWithType>("AutomatedWorkPlace5", new InfinityProcessQueue<ItemWithType>(),
                 new List<Element<ItemWithType>> {
-                    new SimpleProcessor<ItemWithType>("machine1", new List<IDelayGenerator>{new ErlangDelayGenerator(avgDelayProcess5[0], 2), null, new ErlangDelayGenerator(avgDelayProcess5[2], 2)})
-                });
+                    new SimpleProcessor<ItemWithType>("machine1", new List<IDelayGenerator>{new ErlangDelayGenerator(avgDelayProcess5[0], 2), null, new ErlangDelayGenerator(avgDelayProcess5[2], 2)}, false)
+                },
+                false);
 
-            Dispose<ItemWithType> dispose = new Dispose<ItemWithType>("Dispose");
+            Dispose<ItemWithType> dispose = new Dispose<ItemWithType>("Dispose", false);
 
 
             create.NextElementSelector = new NextElementItemTypeSelector<ItemWithType>(

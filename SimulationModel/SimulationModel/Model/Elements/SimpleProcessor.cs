@@ -10,15 +10,15 @@ namespace SimulationModel.Model.Elements
     {
         public T ProcessingItem { get; private set; }
 
-        public SimpleProcessor(string name, IDelayGenerator delayGenerator)
-            : base(name, delayGenerator)
+        public SimpleProcessor(string name, IDelayGenerator delayGenerator, bool isDebug = true)
+            : base(name, delayGenerator, isDebug)
         {
             Processing = false;
             SetNextTime(Double.PositiveInfinity);
         }
 
-        public SimpleProcessor(string name, List<IDelayGenerator> delayGenerators)
-            : base(name, delayGenerators)
+        public SimpleProcessor(string name, List<IDelayGenerator> delayGenerators, bool isDebug = true)
+            : base(name, delayGenerators, isDebug)
         {
             Processing = false;
             SetNextTime(Double.PositiveInfinity);
@@ -29,7 +29,9 @@ namespace SimulationModel.Model.Elements
             ProcessingItem = item;
             item.EndAwait(_currentTime);
 
-            Console.WriteLine($".{Name}: start service, time: {_currentTime}");
+            if (IsDebug)
+                Console.WriteLine($".{Name}: start service, time: {_currentTime}");
+
             Processing = true;
 
             int index = item != null ? item.GetIndexGenerator() : 0;

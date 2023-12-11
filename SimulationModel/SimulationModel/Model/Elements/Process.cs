@@ -48,8 +48,8 @@ namespace SimulationModel.Model.Elements
             return time;
         }
 
-        public Process(string name, IProcessQueue<T> queue, List<Element<T>> processors)
-            : base(name)
+        public Process(string name, IProcessQueue<T> queue, List<Element<T>> processors, bool isDebug = true)
+            : base(name, isDebug)
         {
             _processors = processors;
             SetNextTime(Double.PositiveInfinity);
@@ -61,7 +61,9 @@ namespace SimulationModel.Model.Elements
         {
             item.StartAwait(_currentTime);
 
-            Console.Write(Name);
+            if (IsDebug)
+                Console.Write(Name);
+
             if (TryStartService(item))
             {
                 return;
@@ -69,13 +71,16 @@ namespace SimulationModel.Model.Elements
             
             if (_queue.CanPutItem())
             {
-                Console.WriteLine($": add item in queue, time: {_currentTime}");
+                if (IsDebug)
+                    Console.WriteLine($": add item in queue, time: {_currentTime}");
 
                 _queue.PutItem(item);
                 return;
             }
 
-            Console.WriteLine($": failure, time: {_currentTime}");
+            if (IsDebug)
+                Console.WriteLine($": failure, time: {_currentTime}");
+
             _countFailures++;
         }
 
@@ -90,14 +95,18 @@ namespace SimulationModel.Model.Elements
                     T item = ((SimpleProcessor<T>)finishProcessor).ProcessingItem;
 
                     finishProcessor.FinishService();
-                    Console.WriteLine($"{Name}.{finishProcessor.Name}: finish service, time: {_currentTime}");
+
+                    if (IsDebug)
+                        Console.WriteLine($"{Name}.{finishProcessor.Name}: finish service, time: {_currentTime}");
 
                     Element<T> nextElement = NextElementSelector?.GetNextElement(item);
                     nextElement?.StartService(item);
 
                     if (QueueSize > 0)
                     {
-                        Console.Write(Name);
+                        if (IsDebug)
+                            Console.Write(Name);
+
                         item = _queue.GetItem();
                         finishProcessor.StartService(item);
                     }
