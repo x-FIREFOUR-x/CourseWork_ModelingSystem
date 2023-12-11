@@ -3,7 +3,7 @@
   <Class Name="SimulationModel.Model.Elements.Element&lt;T&gt;">
     <Position X="14.25" Y="4.75" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>gAAAAAIAAAQgAAAAgAAKDAQCAQAAAhAAAAAggAAAAAA=</HashCode>
+      <HashCode>gAgAAAIAAAQgAAAAgAAKDAQCBQAAAhAAAAAggAAAAAA=</HashCode>
       <FileName>Model\Elements\Element.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -106,7 +106,7 @@
   <Class Name="SimulationModel.Model.Model&lt;T&gt;">
     <Position X="14.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAABAAAAAAAAAAAAAAAAQABAAAABAAABAAAAAA=</HashCode>
+      <HashCode>AAAAAAAABAAAAAAAAAAAAAAABQABAAAABAAABAAAAAA=</HashCode>
       <FileName>Model\Model.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>

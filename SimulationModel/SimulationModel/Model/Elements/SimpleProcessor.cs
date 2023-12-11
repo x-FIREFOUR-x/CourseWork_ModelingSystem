@@ -10,15 +10,15 @@ namespace SimulationModel.Model.Elements
     {
         public T ProcessingItem { get; private set; }
 
-        public SimpleProcessor(string name, IDelayGenerator delayGenerator, bool isDebug = true)
-            : base(name, delayGenerator, isDebug)
+        public SimpleProcessor(string name, IDelayGenerator delayGenerator, bool isDebug = true, double timeStartGetStats = 0)
+            : base(name, delayGenerator, isDebug, timeStartGetStats)
         {
             Processing = false;
             SetNextTime(Double.PositiveInfinity);
         }
 
-        public SimpleProcessor(string name, List<IDelayGenerator> delayGenerators, bool isDebug = true)
-            : base(name, delayGenerators, isDebug)
+        public SimpleProcessor(string name, List<IDelayGenerator> delayGenerators, bool isDebug = true, double timeStartGetStats = 0)
+            : base(name, delayGenerators, isDebug, timeStartGetStats)
         {
             Processing = false;
             SetNextTime(Double.PositiveInfinity);

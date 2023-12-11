@@ -48,8 +48,9 @@ namespace SimulationModel.Model.Elements
             return time;
         }
 
-        public Process(string name, IProcessQueue<T> queue, List<Element<T>> processors, bool isDebug = true)
-            : base(name, isDebug)
+
+        public Process(string name, IProcessQueue<T> queue, List<Element<T>> processors, bool isDebug = true, double timeStartGetStats = 0)
+            : base(name, isDebug, timeStartGetStats)
         {
             _processors = processors;
             SetNextTime(Double.PositiveInfinity);
@@ -81,7 +82,10 @@ namespace SimulationModel.Model.Elements
             if (IsDebug)
                 Console.WriteLine($": failure, time: {_currentTime}");
 
-            _countFailures++;
+            if (CurrentTime > _timeStartGetStats)
+            {
+                _countFailures++;
+            }
         }
 
         public override void FinishService()
@@ -120,8 +124,12 @@ namespace SimulationModel.Model.Elements
 
         public override void UpdatedCurrentTime(double currentTime)
         {
-            _averageQueueDividend += (currentTime - _currentTime) * _queue.GetSize();
             base.UpdatedCurrentTime(currentTime);
+
+            if (CurrentTime > _timeStartGetStats)
+            {
+                _averageQueueDividend += (currentTime - _currentTime) * _queue.GetSize();
+            }
 
             foreach (var processor in _processors)
             {

@@ -13,8 +13,8 @@ namespace SimulationModel.Model.Elements
 
         private List<T> _createdItems;
 
-        public Create(string name, IDelayGenerator delayGenerator, ItemFactory<T> itemFactory = null, bool isDebug = true)
-           : base(name, delayGenerator, isDebug)
+        public Create(string name, IDelayGenerator delayGenerator, ItemFactory<T> itemFactory = null, bool isDebug = true, double timeStartGetStats = 0)
+           : base(name, delayGenerator, isDebug, timeStartGetStats)
         {
             Processing = true;
             _currentTime = 0;

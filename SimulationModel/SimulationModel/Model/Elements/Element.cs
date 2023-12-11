@@ -11,61 +11,70 @@ namespace SimulationModel.Model.Elements
         public string Name { get; private set; }
 
         protected List<IDelayGenerator> _delayGenerators;
+        public NextElementSelector.NextElementSelector<T> NextElementSelector { protected get; set; }
+
         private double _nextTime;
         protected double _currentTime;
 
+        protected double _timeStartGetStats;
+
         protected int _countProcessed;
         protected double _timeWorking;
+
 
         public bool IsDebug { get; protected set; }
 
         public virtual bool Processing { get; set; }
 
-        public NextElementSelector.NextElementSelector<T> NextElementSelector { protected get; set; }
+        public virtual double CurrentTime => _currentTime;
 
         public virtual double NextTime() {return _nextTime;}
         
         public void SetNextTime(double nextTime) => _nextTime = nextTime;
         
-        public virtual double CurrentTime => _currentTime; 
-       
 
-        public Element(string name, IDelayGenerator delayGenerator, bool isDebug)
+        public Element(string name, IDelayGenerator delayGenerator, bool isDebug, double timeStartGetStats)
         {
             Name = name;
-            IsDebug = isDebug;
-
-            _currentTime = 0;
-
             _delayGenerators = new List<IDelayGenerator>();
             _delayGenerators.Add(delayGenerator);
-        }
-
-        public Element(string name, List<IDelayGenerator> delayGenerators, bool isDebug)
-        {
-            Name = name;
-            IsDebug = isDebug;
 
             _currentTime = 0;
 
+            IsDebug = isDebug;
+            _timeStartGetStats = timeStartGetStats;
+        }
+
+        public Element(string name, List<IDelayGenerator> delayGenerators, bool isDebug, double timeStartGetStats)
+        {
+            Name = name;
             _delayGenerators = delayGenerators;
-        }
-
-        public Element(string name, bool isDebug)
-        {
-            Name = name;
-            IsDebug = isDebug;
 
             _currentTime = 0;
 
+            IsDebug = isDebug;
+            _timeStartGetStats = timeStartGetStats;
+        }
+
+        public Element(string name, bool isDebug, double timeStartGetStats)
+        {
+            Name = name;
             _delayGenerators = null;
+
+            _currentTime = 0;
+
+            IsDebug = isDebug;
+            _timeStartGetStats = timeStartGetStats;
         }
 
         public virtual void StartService(T item) { Processing = true; }
 
         public virtual void FinishService() 
         { 
-            _countProcessed++;
+            if (CurrentTime > _timeStartGetStats)
+            {
+                _countProcessed++;
+            }
         }
 
         public virtual bool TryFinish() 
@@ -78,8 +87,9 @@ namespace SimulationModel.Model.Elements
             return false;
         }
 
-        public virtual void UpdatedCurrentTime(double currentTime) {
-            if(Processing)
+        public virtual void UpdatedCurrentTime(double currentTime) 
+        {
+            if(currentTime > _timeStartGetStats && Processing)
             {
                 _timeWorking += currentTime - _currentTime;
             }

@@ -10,8 +10,8 @@ namespace SimulationModel.Model.Elements
     {
         private List<T> _finishItems;
 
-        public Dispose(string name, bool isDebug = true)
-            :base(name, isDebug)
+        public Dispose(string name, bool isDebug = true, double timeStartGetStats = 0)
+            :base(name, isDebug, timeStartGetStats)
         {
             _currentTime = 0;
             SetNextTime(Double.PositiveInfinity);
@@ -21,8 +21,9 @@ namespace SimulationModel.Model.Elements
 
         public override void StartService(T item) 
         {
+            base.FinishService();
+
             item.Finish(_currentTime);
-            _countProcessed++;
             _finishItems.Add(item);
         }
 
@@ -62,20 +63,22 @@ namespace SimulationModel.Model.Elements
 
             stats[StatName.FinishedItems] = _countProcessed;
 
+            var finishItemsInTimeStartGetStats = _finishItems.Where(a => a.StartTime > _timeStartGetStats).ToList();
+
             double averageTime = 0;
-            foreach (var item in _finishItems)
+            foreach (var item in finishItemsInTimeStartGetStats)
             {
                 averageTime += item.FinishTime - item.StartTime;
             }
-            averageTime /= _finishItems.Count();
+            averageTime /= finishItemsInTimeStartGetStats.Count();
             stats[StatName.AverageTimeComplite] = averageTime;
 
             double averageTimeAwait = 0;
-            foreach (var item in _finishItems)
+            foreach (var item in finishItemsInTimeStartGetStats)
             {
                 averageTimeAwait += item.TimeAwait;
             }
-            averageTimeAwait /= _finishItems.Count();
+            averageTimeAwait /= finishItemsInTimeStartGetStats.Count();
             stats[StatName.AverageTimeAwait] = averageTimeAwait;
 
             return stats;
