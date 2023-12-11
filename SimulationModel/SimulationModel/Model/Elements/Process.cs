@@ -202,11 +202,19 @@ namespace SimulationModel.Model.Elements
             stats[StatName.Failures] = _countFailures;
             stats[StatName.Processed] = _countProcessed;
 
-            stats[StatName.AverageQueueSize] = _averageQueueDividend / _currentTime;
+            stats[StatName.AverageQueueSize] = _currentTime != 0 ? _averageQueueDividend / _currentTime : 0;
             stats[StatName.FailureProbability] = (float)_countFailures / (_countFailures + _countProcessed);
-            stats[StatName.AverageWorkload] = _timeWorking / _currentTime;
+            stats[StatName.AverageWorkload] = _currentTime != 0 ? _timeWorking / _currentTime : 0;
 
             return stats;
+        }
+
+        public void setIsDebugForSubProcess(bool isDebug)
+        {
+            foreach (var p in _processors)
+            {
+                p.IsDebug = IsDebug;
+            }
         }
     }
 }

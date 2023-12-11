@@ -15,10 +15,11 @@ namespace SimulationModel
     {
         public static void Main(string[] args)
         {
-            //Model<ItemWithType> model = CreateModel();
-            //model.Simulation(100, true);
-
-            ModelVerification(100, 100);
+            Model<ItemWithType> model = CreateModel();
+            model.Simulation(100, true);
+            //var t = model.Simulation(100, 50);
+            //int g = 0;
+            //ModelVerification(100, 100);
         }
 
         private static Model<ItemWithType> CreateModel()

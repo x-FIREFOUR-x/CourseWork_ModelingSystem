@@ -22,7 +22,7 @@ namespace SimulationModel.Model.Elements
         protected double _timeWorking;
 
 
-        public bool IsDebug { get; protected set; }
+        public bool IsDebug { get; set; }
 
         public virtual bool Processing { get; set; }
 

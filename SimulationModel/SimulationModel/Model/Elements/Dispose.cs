@@ -70,7 +70,7 @@ namespace SimulationModel.Model.Elements
             {
                 averageTime += item.FinishTime - item.StartTime;
             }
-            averageTime /= finishItemsInTimeStartGetStats.Count();
+            averageTime = finishItemsInTimeStartGetStats.Count() != 0 ? averageTime / finishItemsInTimeStartGetStats.Count() : 0;
             stats[StatName.AverageTimeComplite] = averageTime;
 
             double averageTimeAwait = 0;
@@ -78,7 +78,7 @@ namespace SimulationModel.Model.Elements
             {
                 averageTimeAwait += item.TimeAwait;
             }
-            averageTimeAwait /= finishItemsInTimeStartGetStats.Count();
+            averageTimeAwait = finishItemsInTimeStartGetStats.Count() != 0 ? averageTimeAwait / finishItemsInTimeStartGetStats.Count() : 0;
             stats[StatName.AverageTimeAwait] = averageTimeAwait;
 
             return stats;
