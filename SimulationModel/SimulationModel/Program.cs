@@ -18,7 +18,7 @@ namespace SimulationModel
             //Model<ItemWithType> model = CreateModel();
             //model.Simulation(100, true);
 
-            ModelVerification(1);
+            ModelVerification(100, 100);
         }
 
         private static Model<ItemWithType> CreateModel()
@@ -94,7 +94,7 @@ namespace SimulationModel
             return new Model<ItemWithType>(elements);
         }
 
-        private static void ModelVerification(int countRun)
+        private static void ModelVerification(int countRun, double timeSimulation)
         {
             Dictionary<string, double> stats = new();
             stats[StatName.AverageWorkload + "1"] = 0;
@@ -114,7 +114,7 @@ namespace SimulationModel
                     new List<double> { 0.5, 0.75, 1.0 },
                     new List<double> { -1, 1.1, 0.9 },
                     new List<double> { 0.5, -1, 0.25 });
-                model.Simulation(100, true);
+                model.Simulation(timeSimulation, false);
 
                 if (i == 0)
                     continue;
