@@ -350,3 +350,5 @@ MigrationBackup/
 .ionide/
 .idea/
 TestProject1/
+
+SimulationModel/SimulationModel/SaveStats/

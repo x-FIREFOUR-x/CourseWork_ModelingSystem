@@ -15,11 +15,13 @@ namespace SimulationModel
     {
         public static void Main(string[] args)
         {
-            Model<ItemWithType> model = CreateModel();
-            model.Simulation(100, true);
-            //var t = model.Simulation(100, 50);
-            //int g = 0;
+            //Model<ItemWithType> model = CreateModel();
+            //model.Simulation(100, true);
+
             //ModelVerification(100, 100);
+
+
+            TacticalPlanning(5, 2000, 5);
         }
 
         private static Model<ItemWithType> CreateModel()
@@ -220,6 +222,71 @@ namespace SimulationModel
             elements.Add(workPlace5);
             elements.Add(dispose);
             return new Model<ItemWithType>(elements);
+        }
+
+
+        private static void TacticalPlanning(int countRepeat, int timeSimulation, int stepSimulation)
+        {
+            Model<ItemWithType> model = CreateModel();
+            var avgStats = model.Simulation(timeSimulation, stepSimulation);
+
+            Dictionary<string, Dictionary<string, List<double>>> data = new();
+            
+
+            for (int i = 0; i < countRepeat; i++)
+            {
+                Console.WriteLine(i + 1);
+
+                model = CreateModel();
+                var stats = model.Simulation(timeSimulation, stepSimulation);
+
+                foreach (var key in stats.Keys)
+                {
+                    if (!data.ContainsKey(key))
+                        data[key] = new();
+                    
+                    data[key][(i + 1).ToString() + key] = stats[key];
+                }
+            }
+
+            foreach (var key in data.Keys)
+            {
+                StatsSaver.SaveToCsv(data[key], $"{key}.csv", 0, stepSimulation);
+            }
+            
+        }
+
+        private static void TacticalPlanning2(int countRepeat, int timeSimulation, int stepSimulation)
+        {
+            Model<ItemWithType> model = CreateModel();
+            var avgStats = model.Simulation(timeSimulation, stepSimulation);
+
+            for (int i = 0; i < countRepeat - 1; i++)
+            {
+                Console.WriteLine(i + 1);
+
+                model = CreateModel();
+                var stats = model.Simulation(timeSimulation, stepSimulation);
+
+                foreach (var key in avgStats.Keys)
+                {
+                    for (int j = 0; j < avgStats[key].Count; j++)
+                    {
+                        avgStats[key][j] += stats[key][j];
+                    }
+                }
+            }
+
+
+            foreach (var key in avgStats.Keys)
+            {
+                for (int j = 0; j < avgStats[key].Count; j++)
+                {
+                    avgStats[key][j] /= countRepeat;
+                }
+            }
+
+            StatsSaver.SaveToCsv(avgStats, "stats.csv", 0, stepSimulation);
         }
     }
 }
