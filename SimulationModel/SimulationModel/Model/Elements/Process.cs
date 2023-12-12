@@ -204,7 +204,8 @@ namespace SimulationModel.Model.Elements
 
             stats[StatName.AverageQueueSize] = _currentTime != 0 ? _averageQueueDividend / _currentTime : 0;
             stats[StatName.FailureProbability] = (float)_countFailures / (_countFailures + _countProcessed);
-            stats[StatName.AverageWorkload] = _currentTime != 0 ? _timeWorking / _currentTime : 0;
+            stats[StatName.AverageWorkload] = _currentTime != 0 ? _timeWorking / (_currentTime - _timeStartGetStats) : 0;
+            stats[StatName.AverageWorkload] = stats[StatName.AverageWorkload] > 1 ? 1.0 : stats[StatName.AverageWorkload];
 
             return stats;
         }

@@ -18,10 +18,13 @@ namespace SimulationModel
             //Model<ItemWithType> model = CreateModel();
             //model.Simulation(100, true);
 
-            //ModelVerification(100, 100);
+            //runModel(100, 100);
 
 
-            TacticalPlanning(5, 2000, 5);
+            //TacticalPlanning(5, 5000, 5);
+
+            runModel(80, 10000, 0);
+            runModel(80, 10000, 4000);
         }
 
         private static Model<ItemWithType> CreateModel()
@@ -97,7 +100,7 @@ namespace SimulationModel
             return new Model<ItemWithType>(elements);
         }
 
-        private static void ModelVerification(int countRun, double timeSimulation)
+        private static void runModel(int countRun, double timeSimulation, double startTimeGetStats = 0)
         {
             Dictionary<string, double> stats = new();
             stats[StatName.AverageWorkload + "1"] = 0;
@@ -116,11 +119,14 @@ namespace SimulationModel
                     new List<double> { 0.85, -1, 1.24 },
                     new List<double> { 0.5, 0.75, 1.0 },
                     new List<double> { -1, 1.1, 0.9 },
-                    new List<double> { 0.5, -1, 0.25 });
+                    new List<double> { 0.5, -1, 0.25 },
+                    startTimeGetStats);
                 model.Simulation(timeSimulation, false);
 
                 if (i == 0)
                     continue;
+
+                Console.WriteLine(i);
 
                 for (int j = 1; j < model.GetElements().Count - 1; j++)
                 {
@@ -133,7 +139,7 @@ namespace SimulationModel
 
             foreach (var k in stats.Keys)
             {
-               Console.WriteLine($"{k}: { Math.Round((stats[k] / countRun), 3)}");
+               Console.WriteLine($"{k}: { Math.Round((stats[k] / countRun), 5)}");
             }
         }
 
@@ -144,14 +150,16 @@ namespace SimulationModel
             List<double> avgDelayProcess2,
             List<double> avgDelayProcess3,
             List<double> avgDelayProcess4,
-            List<double> avgDelayProcess5
+            List<double> avgDelayProcess5,
+            double startTimeGetStats
         )
         {
             Create<ItemWithType> create = new Create<ItemWithType>(
                 "Create",
                 new ExponentialDelayGenerator(avgCreate),
                 new ItemWithTypeFactory(chanseCreate),
-                false);
+                false,
+                startTimeGetStats);
 
             Process<ItemWithType> workPlace1 = new Process<ItemWithType>("AutomatedWorkPlace1", new InfinityProcessQueue<ItemWithType>(),
                 new List<Element<ItemWithType>> {
@@ -159,14 +167,16 @@ namespace SimulationModel
                     new SimpleProcessor<ItemWithType>("machine2", new List<IDelayGenerator>{ new ErlangDelayGenerator(avgDelayProcess1[0], 2), new ErlangDelayGenerator(avgDelayProcess1[1], 2), new ErlangDelayGenerator(avgDelayProcess1[2], 2)}, false),
                     new SimpleProcessor<ItemWithType>("machine3", new List<IDelayGenerator>{ new ErlangDelayGenerator(avgDelayProcess1[0], 2), new ErlangDelayGenerator(avgDelayProcess1[1], 2), new ErlangDelayGenerator(avgDelayProcess1[2], 2)}, false),
                 },
-                false);
+                false,
+                startTimeGetStats);
 
             Process<ItemWithType> workPlace2 = new Process<ItemWithType>("AutomatedWorkPlace2", new InfinityProcessQueue<ItemWithType>(),
                 new List<Element<ItemWithType>> {
                     new SimpleProcessor<ItemWithType>("machine1", new List<IDelayGenerator>{ new ErlangDelayGenerator(avgDelayProcess2[0], 2), null, new ErlangDelayGenerator(avgDelayProcess2[2], 2)}, false),
                     new SimpleProcessor<ItemWithType>("machine2", new List<IDelayGenerator>{ new ErlangDelayGenerator(avgDelayProcess2[0], 2), null, new ErlangDelayGenerator(avgDelayProcess2[2], 2)}, false),
                 },
-                false);
+                false,
+                startTimeGetStats);
 
             Process<ItemWithType> workPlace3 = new Process<ItemWithType>("AutomatedWorkPlace3", new InfinityProcessQueue<ItemWithType>(),
                 new List<Element<ItemWithType>> {
@@ -175,7 +185,8 @@ namespace SimulationModel
                     new SimpleProcessor<ItemWithType>("machine3", new List<IDelayGenerator>{ new ErlangDelayGenerator(avgDelayProcess3[0], 2), new ErlangDelayGenerator(avgDelayProcess3[1], 2), new ErlangDelayGenerator(avgDelayProcess3[2], 2)}, false),
                     new SimpleProcessor<ItemWithType>("machine4", new List<IDelayGenerator>{ new ErlangDelayGenerator(avgDelayProcess3[0], 2), new ErlangDelayGenerator(avgDelayProcess3[1], 2), new ErlangDelayGenerator(avgDelayProcess3[2], 2)}, false),
                 },
-                false);
+                false,
+                startTimeGetStats);
 
             Process<ItemWithType> workPlace4 = new Process<ItemWithType>("AutomatedWorkPlace4", new InfinityProcessQueue<ItemWithType>(),
                 new List<Element<ItemWithType>> {
@@ -183,15 +194,17 @@ namespace SimulationModel
                     new SimpleProcessor<ItemWithType>("machine2", new List<IDelayGenerator>{ null, new ErlangDelayGenerator(avgDelayProcess4[1], 2), new ErlangDelayGenerator(avgDelayProcess4[2], 2)}, false),
                     new SimpleProcessor<ItemWithType>("machine3", new List<IDelayGenerator>{ null, new ErlangDelayGenerator(avgDelayProcess4[1], 2), new ErlangDelayGenerator(avgDelayProcess4[2], 2)}, false),
                 },
-                false);
+                false,
+                startTimeGetStats);
 
             Process<ItemWithType> workPlace5 = new Process<ItemWithType>("AutomatedWorkPlace5", new InfinityProcessQueue<ItemWithType>(),
                 new List<Element<ItemWithType>> {
                     new SimpleProcessor<ItemWithType>("machine1", new List<IDelayGenerator>{new ErlangDelayGenerator(avgDelayProcess5[0], 2), null, new ErlangDelayGenerator(avgDelayProcess5[2], 2)}, false)
                 },
-                false);
+                false,
+                startTimeGetStats);
 
-            Dispose<ItemWithType> dispose = new Dispose<ItemWithType>("Dispose", false);
+            Dispose<ItemWithType> dispose = new Dispose<ItemWithType>("Dispose", false, startTimeGetStats);
 
 
             create.NextElementSelector = new NextElementItemTypeSelector<ItemWithType>(
@@ -254,39 +267,6 @@ namespace SimulationModel
                 StatsSaver.SaveToCsv(data[key], $"{key}.csv", 0, stepSimulation);
             }
             
-        }
-
-        private static void TacticalPlanning2(int countRepeat, int timeSimulation, int stepSimulation)
-        {
-            Model<ItemWithType> model = CreateModel();
-            var avgStats = model.Simulation(timeSimulation, stepSimulation);
-
-            for (int i = 0; i < countRepeat - 1; i++)
-            {
-                Console.WriteLine(i + 1);
-
-                model = CreateModel();
-                var stats = model.Simulation(timeSimulation, stepSimulation);
-
-                foreach (var key in avgStats.Keys)
-                {
-                    for (int j = 0; j < avgStats[key].Count; j++)
-                    {
-                        avgStats[key][j] += stats[key][j];
-                    }
-                }
-            }
-
-
-            foreach (var key in avgStats.Keys)
-            {
-                for (int j = 0; j < avgStats[key].Count; j++)
-                {
-                    avgStats[key][j] /= countRepeat;
-                }
-            }
-
-            StatsSaver.SaveToCsv(avgStats, "stats.csv", 0, stepSimulation);
         }
     }
 }
